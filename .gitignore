@@ -1,0 +1,11 @@
+# Python Generated files
+__pycache__
+*.pyc
+# Visual Studio Code Directory
+.vscode
+# Jetbrains Directory
+.idea
+# Virtual Environment
+.venv
+# Environment
+.env
