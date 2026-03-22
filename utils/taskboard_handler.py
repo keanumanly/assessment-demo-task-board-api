@@ -1,6 +1,7 @@
 
 from fastapi import HTTPException
 from models.schema_api import PostingData
+from configs.config import settings
 from dotenv import load_dotenv
 import json
 import redis
@@ -68,7 +69,7 @@ def del_request(uuid: str):
 
 def execute_label_request():
     try:
-        result = json.loads(redis_client.get("LABELS"))
+        result = json.loads(settings.REDIS_CLIENT.get("LABELS"))
         return result
     except Exception as e:
         print(f"❌ Error: {e}")
