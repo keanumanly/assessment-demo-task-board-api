@@ -2,23 +2,12 @@
 from fastapi import HTTPException
 from models.schema_api import PostingData
 from configs.config import settings
-from dotenv import load_dotenv
 import json
-import redis
-import os
-
-load_dotenv()
-REDIS_HOST = os.getenv("REDIS_HOST")
-REDIS_PORT = int(os.getenv("REDIS_PORT"))
-REDIS_DB = int(os.getenv("REDIS_DB"))
-
-# Set & Connect the Redis Client
-redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=True)
 
 
 def get_request():
     try:
-        result = json.loads(redis_client.get("TASKS"))
+        result = json.loads(settings.REDIS_CLIENT.get("TASKS"))
         return result
     except Exception as e:
         print(f"❌ Error: {e}")
@@ -30,10 +19,10 @@ def post_request(response_model: PostingData):
         data = response_model.model_dump()
         if data.get("id") is None or not data.get("id"):
             raise HTTPException(status_code=404, detail="No Data")
-        taks_list = json.loads(redis_client.get("TASKS"))
+        taks_list = json.loads(settings.REDIS_CLIENT.get("TASKS"))
         taks_list[data["id"]] = data
         json_object = json.dumps(taks_list)
-        redis_client.set("TASKS", json_object)
+        settings.REDIS_CLIENT.set("TASKS", json_object)
         return taks_list
     except Exception as e:
         print(f"❌ Error: {e}")
@@ -45,10 +34,10 @@ def put_request(response_model: PostingData):
         data = response_model.model_dump()
         if data.get("id") is None or not data.get("id"):
             raise HTTPException(status_code=404, detail="No Data")
-        taks_list = json.loads(redis_client.get("TASKS"))
+        taks_list = json.loads(settings.REDIS_CLIENT.get("TASKS"))
         taks_list[data["id"]] = data
         json_object = json.dumps(taks_list)
-        redis_client.set("TASKS", json_object)
+        settings.REDIS_CLIENT.set("TASKS", json_object)
         return taks_list
     except Exception as e:
         print(f"❌ Error: {e}")
@@ -57,10 +46,10 @@ def put_request(response_model: PostingData):
 
 def del_request(uuid: str):
     try:
-        taks_list = json.loads(redis_client.get("TASKS"))
+        taks_list = json.loads(settings.REDIS_CLIENT.get("TASKS"))
         del taks_list[uuid]
         json_object = json.dumps(taks_list)
-        redis_client.set("TASKS", json_object)
+        settings.REDIS_CLIENT.set("TASKS", json_object)
         return taks_list
     except Exception as e:
         print(f"❌ Error: {e}")
@@ -78,7 +67,7 @@ def execute_label_request():
 
 def execute_assignees_request():
     try:
-        result = json.loads(redis_client.get("ASSIGNEES"))
+        result = json.loads(settings.REDIS_CLIENT.get("ASSIGNEES"))
         return result
     except Exception as e:
         print(f"❌ Error: {e}")
