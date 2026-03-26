@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
-from configs.config import settings
-from fastapi.openapi.utils import get_openapi
-from utils.custom_api import custom_api
-from api.router import router
+# from fastapi.openapi.utils import get_openapi
+# from app.utils.custom_api import custom_api
+
+from app.database import engine, Base
+from app.configs.config import settings
+# from app.routes.router import router
+from app.routes import assignees
+import app.models.models
 
 # root = os.getenv("ROOT_PATH", "")
 # root = "/"  # local test
@@ -41,22 +45,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(router)
+Base.metadata.create_all(bind=engine)
+
+app.include_router(assignees.router)
+# app.include_router(router)
 
 
-@app.get("/", include_in_schema=False)
-def redirect_to_docs():
+@app.get("/", tags=["Health"])
+async def root():
     return RedirectResponse(url="/docs")
-
-
-# @app.get("/", tags=["Health"])
-# async def root():
-#     return {
-#         "app": settings.APP_NAME,
-#         "version": settings.APP_VERSION,
-#         "docs": "/docs",
-#         "graphql": "/graphql",
-#     }
 
 
 @app.get("/health", tags=["Health"])

@@ -14,25 +14,26 @@ A production-ready REST + Redis + GraphQL API built with FastAPI, SQLAlchemy, St
 ## Project Structure
 
 ```
-assessment-demo-task-board-api
-│   ├── core/
-│   │   ├── config.py       # Settings via pydantic-settings
-│   │   └── security.py     # JWT utils, password hashing, auth dependency
-│   ├── graphql/
-│   │   └── schema.py       # Strawberry GraphQL schema (Query + Mutation)
+assessment-demo-task-board-api/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── database.py
 │   ├── models/
-│   │   ├── user.py         # SQLAlchemy User model
-│   │   └── item.py         # SQLAlchemy Item model
-│   ├── routers/
-│   │   ├── auth.py         # POST /api/auth/register, /api/auth/login
-│   │   ├── users.py        # GET/PATCH/DELETE /api/users/me
-│   │   └── items.py        # Full CRUD /api/items/
+│   │   ├── __init__.py
+│   │   └── models.py
 │   ├── schemas/
-│   │   ├── user.py         # Pydantic user schemas
-│   │   └── item.py         # Pydantic item schemas
-│   ├── database.py         # Async engine, session, Base, init_db
-│   └── main.py             # App factory, middleware, router inclusion
-├── .env.example
+│   │   ├── __init__.py
+│   │   ├── assignee.py
+│   │   ├── label.py
+│   │   ├── task.py
+│   │   └── task_relations.py
+│   └── routes/
+│       ├── __init__.py
+│       ├── assignees.py
+│       ├── labels.py
+│       └── tasks.py
+├── .env
 ├── requirements.txt
 └── README.md
 ```
