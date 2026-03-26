@@ -66,6 +66,9 @@ pip install -r requirements.txt
 pip install "fastapi[standard]"
 pip install flake8
 pip install redis
+pip install SQLAlchemy
+pip install psycopg2-binary 
+pip install python-dotenv
 
 # 4. Create or Configure environment
 cp  .env
