@@ -1,11 +1,8 @@
-import os
 from fastapi import HTTPException, Depends
 from fastapi.security import APIKeyHeader
-from dotenv import load_dotenv
+from app.configs.config import settings
 
-load_dotenv()
-
-APIKEY = os.getenv("APIKEY")
+APIKEY = settings.APIKEY
 
 # Define API key security scheme
 api_key_scheme = APIKeyHeader(name="Authorization")

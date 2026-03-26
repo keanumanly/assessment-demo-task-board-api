@@ -12,12 +12,12 @@ def list_assignees(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)
     return db.query(Assignee).offset(skip).limit(limit).all()
 
 
-# @router.get("/{assignee_id}", response_model=AssigneeOut)
-# def get_assignee(assignee_id: int, db: Session = Depends(get_db)):
-#     assignee = db.query(Assignee).filter(Assignee.id == assignee_id).first()
-#     if not assignee:
-#         raise HTTPException(status_code=404, detail="Assignee not found")
-#     return assignee
+@router.get("/{assignee_id}", response_model=AssigneeOut)
+def get_assignee(assignee_id: int, db: Session = Depends(get_db)):
+    assignee = db.query(Assignee).filter(Assignee.id == assignee_id).first()
+    if not assignee:
+        raise HTTPException(status_code=404, detail="Assignee not found")
+    return assignee
 
 
 # @router.post("/", response_model=AssigneeOut, status_code=201)

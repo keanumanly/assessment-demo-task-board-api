@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 # from fastapi.openapi.utils import get_openapi
@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import engine, Base
 from app.configs.config import settings
+from app.utils.auth import authenticate
 # from app.routes.router import router
 from app.routes import assignees
 import app.models.models
@@ -47,7 +48,7 @@ app.add_middleware(
 
 Base.metadata.create_all(bind=engine)
 
-app.include_router(assignees.router)
+app.include_router(assignees.router, dependencies=[Depends(authenticate)])
 # app.include_router(router)
 
 

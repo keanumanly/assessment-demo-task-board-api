@@ -7,8 +7,11 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = True
 
-    # # Database
+    # Database
     DATABASE_URL: str | None = None
+    
+    # APIKEY
+    APIKEY: str
 
     # # JWT
     # SECRET_KEY: str = "your-super-secret-key-change-in-production"
