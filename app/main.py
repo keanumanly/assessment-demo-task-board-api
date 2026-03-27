@@ -8,7 +8,7 @@ from app.database import engine, Base
 from app.configs.config import settings
 from app.utils.auth import authenticate
 # from app.routes.router import router
-from app.routes import assignees
+from app.routes import assignees, labels, tasks
 import app.models.models
 
 # root = os.getenv("ROOT_PATH", "")
@@ -49,7 +49,8 @@ app.add_middleware(
 Base.metadata.create_all(bind=engine)
 
 app.include_router(assignees.router, dependencies=[Depends(authenticate)])
-# app.include_router(router)
+app.include_router(labels.router, dependencies=[Depends(authenticate)])
+app.include_router(tasks.router, dependencies=[Depends(authenticate)])
 
 
 @app.get("/", tags=["Health"])
