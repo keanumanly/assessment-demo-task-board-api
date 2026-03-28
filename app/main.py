@@ -8,8 +8,9 @@ from app.database import engine, Base
 from app.configs.config import settings
 from app.utils.auth import authenticate
 # from app.routes.router import router
-from app.routes import assignees, labels, tasks
+from app.routes import assignees, labels, tasks, auth as auth_router
 import app.models.models
+from app.configs.dependencies import get_current_active_user
 
 # root = os.getenv("ROOT_PATH", "")
 # root = "/"  # local test
@@ -27,7 +28,7 @@ A production-ready REST + GraphQL API featuring:
 - 🔐 **JWT Authentication** — register, login, bearer token protection
 - 📦 **Items CRUD** — create, read, update, delete your items
 - 👤 **User Management** — profile retrieval and updates
-- 🔍 **GraphQL** — flexible queries and mutations via Strawberry
+- 🔍 **PostgreSQL** — flexible queries and mutations via Strawberry
 - 📄 **Auto Docs** — Swagger UI at `/docs`, ReDoc at `/redoc`
     """,
     # root_path=root,
@@ -48,9 +49,10 @@ app.add_middleware(
 
 Base.metadata.create_all(bind=engine)
 
-app.include_router(assignees.router, dependencies=[Depends(authenticate)])
-app.include_router(labels.router, dependencies=[Depends(authenticate)])
-app.include_router(tasks.router, dependencies=[Depends(authenticate)])
+app.include_router(auth_router.router)
+app.include_router(assignees.router, dependencies=[Depends(get_current_active_user)])
+app.include_router(labels.router, dependencies=[Depends(get_current_active_user)])
+app.include_router(tasks.router, dependencies=[Depends(get_current_active_user)])
 
 
 @app.get("/", include_in_schema=False)

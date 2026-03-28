@@ -7,9 +7,9 @@ A production-ready REST + Redis + GraphQL API built with FastAPI, SQLAlchemy, St
 - 🔐 **JWT Authentication** (register + login)
 - 📦 **Items CRUD** (protected endpoints)
 - 👤 **User Profile** management
-- 🔍 **GraphQL API** via Strawberry (`/graphql`)
+- 🔍 **PostgreSQL** 
 - 📄 **Swagger UI** auto-docs (`/docs`)
-- ⚡ **Async** SQLAlchemy + SQLite (swappable to PostgreSQL)
+- ⚡ **Async** SQLAlchemy 
 
 ## Project Structure
 
@@ -28,6 +28,7 @@ assessment-demo-task-board-api/
 │   │   ├── label.py
 │   │   ├── task.py
 │   │   └── task_relations.py
+│   │   └── auth.py
 │   └── routes/
 │       ├── __init__.py
 │       ├── assignees.py
@@ -70,6 +71,8 @@ pip install redis
 pip install SQLAlchemy
 pip install psycopg2-binary 
 pip install python-dotenv
+pip install python-jose[cryptography] | pip install python-jose
+pip install passlib[bcrypt] | pip install passlib
 
 # 4. Create or Configure environment
 cp  .env

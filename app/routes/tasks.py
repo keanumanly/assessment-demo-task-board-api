@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 from app.database import get_db
-from app.models.models import Task, TaskLabel, TaskAssignee, Label, Assignee
+from app.models.models import Task, TaskLabel, TaskAssignee, Label, Assignee, User
 from app.schemas.task import TaskCreate, TaskUpdate, TaskOut
 from app.schemas.task_relations import (
     TaskLabelCreate, TaskLabelOut,
     TaskAssigneeCreate, TaskAssigneeOut
 )
+from app.configs.dependencies import get_current_active_user
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
@@ -29,7 +30,7 @@ def get_task_or_404(task_id: int, db: Session) -> Task:
 # ── Task CRUD ──────────────────────────────────────────────────
 
 @router.post("/", response_model=TaskOut, status_code=201)
-def create_task(payload: TaskCreate, db: Session = Depends(get_db)):
+def create_task(payload: TaskCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_active_user)):
     task = Task(**payload.model_dump())
     db.add(task)
     db.commit()
