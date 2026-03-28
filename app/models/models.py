@@ -33,13 +33,12 @@ class Task(Base):
     __tablename__ = "tasks"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(100), nullable=False)
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
     status = Column(String(50), default="todo")        # e.g. todo, in_progress, done
     priority = Column(String(50), default="medium")    # e.g. low, medium, high
     task_order = Column(Integer, default=0)
-    due_date = Column(DateTime, nullable=True)
+    duedate = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc),
                         onupdate=lambda: datetime.now(timezone.utc))

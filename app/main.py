@@ -53,7 +53,7 @@ app.include_router(labels.router, dependencies=[Depends(authenticate)])
 app.include_router(tasks.router, dependencies=[Depends(authenticate)])
 
 
-@app.get("/", tags=["Health"])
+@app.get("/", include_in_schema=False)
 async def root():
     return RedirectResponse(url="/docs")
 

@@ -6,23 +6,21 @@ from app.schemas.assignee import AssigneeOut
 
 
 class TaskCreate(BaseModel):
-    name: str
     title: str
     description: str | None = None
     status: Literal["todo", "in_progress", "in_review", "done"] = "todo"
     priority: Literal["low", "medium", "high", "critical"] = "medium"
     task_order: int = 0
-    due_date: datetime | None = None
+    duedate: datetime | None = None
 
 
 class TaskUpdate(BaseModel):
-    name: str | None = None
     title: str | None = None
     description: str | None = None
     status: Literal["todo", "in_progress", "in_review", "done"] | None = None
     priority: Literal["low", "medium", "high", "critical"] | None = None
     task_order: int | None = None
-    due_date: datetime | None = None
+    duedate: datetime | None = None
 
 
 class TaskLabelInfo(BaseModel):
@@ -37,13 +35,12 @@ class TaskAssigneeInfo(BaseModel):
 
 class TaskOut(BaseModel):
     id: int
-    name: str
     title: str
     description: str | None
     status: str
     priority: str
     task_order: int
-    due_date: datetime | None
+    duedate: datetime | None
     created_at: datetime
     updated_at: datetime
     labels: list[TaskLabelInfo] = []
