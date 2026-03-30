@@ -72,7 +72,7 @@ pip install SQLAlchemy
 pip install psycopg2-binary 
 pip install python-dotenv
 pip install python-jose[cryptography] | pip install python-jose
-pip install passlib[bcrypt] | pip install passlib
+pip install passlib[bcrypt] | pip install passlib | pip install bcrypt
 
 # 4. Create or Configure environment
 cp  .env
