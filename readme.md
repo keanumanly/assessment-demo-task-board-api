@@ -7,7 +7,7 @@ A production-ready REST + Redis + GraphQL API built with FastAPI, SQLAlchemy, St
 - 🔐 **JWT Authentication** (register + login)
 - 📦 **Items CRUD** (protected endpoints)
 - 👤 **User Profile** management
-- 🔍 **PostgreSQL** 
+- 🔍 **PostgreSQL** database
 - 📄 **Swagger UI** auto-docs (`/docs`)
 - ⚡ **Async** SQLAlchemy 
 
@@ -16,24 +16,35 @@ A production-ready REST + Redis + GraphQL API built with FastAPI, SQLAlchemy, St
 ```
 assessment-demo-task-board-api/
 ├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── database.py
+│   ├── configs/
+│   │   ├── __init__.py
+│   │   └── config.py
+│   │   └── dependencies.py
+│   │   └── security.py
 │   ├── models/
 │   │   ├── __init__.py
 │   │   └── models.py
+│   └── routes/
+│   │   ├── __init__.py
+│   │   ├── assignees.py
+│   │   ├── auth.py
+│   │   ├── labels.py
+│   │   └── tasks.py
 │   ├── schemas/
 │   │   ├── __init__.py
 │   │   ├── assignee.py
+│   │   ├── auth.py
 │   │   ├── label.py
 │   │   ├── task.py
 │   │   └── task_relations.py
+│   ├── utils/
+│   │   ├── __init__.py
 │   │   └── auth.py
-│   └── routes/
-│       ├── __init__.py
-│       ├── assignees.py
-│       ├── labels.py
-│       └── tasks.py
+│   │   └── custom_api.py
+│   │   └── taskboard_handler.py
+│   ├── __init__.py
+│   ├── main.py
+│   ├── database.py
 ├── .env
 ├── requirements.txt
 └── README.md
